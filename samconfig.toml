@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "dynamodb-streams-to-firehose"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1it9ru0n9kjyw"
+s3_prefix = "dynamodb-streams-to-firehose"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
