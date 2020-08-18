@@ -87,7 +87,7 @@ var USE_DEFAULT_DELIVERY_STREAMS = true;
  * value: deliveryStreamName
  */
 var deliveryStreamMapping = {
-    'DEFAULT': 'LambdaStreamsDefaultDeliveryStream'
+    'DEFAULT': process.env.DEFAULT_DELIVERY_STREAM
 };
 
 var start;
@@ -412,12 +412,12 @@ function getBatchRanges(records) {
         batchCurrentCount += 1;
 
         // To get next record size inorder to calculate the FIREHOSE_MAX_BATCH_BYTES
-        if(i === records.length - 1) {
-		    nextRecordSize = 0;
-	    } else {
-		    nextRecordSize = Buffer.byteLength(records[i+1].toString(targetEncoding), targetEncoding);
-	    }
-        
+        if (i === records.length - 1) {
+            nextRecordSize = 0;
+        } else {
+            nextRecordSize = Buffer.byteLength(records[i + 1].toString(targetEncoding), targetEncoding);
+        }
+
         // generate a new batch marker every 4MB or 500 records, whichever comes
         // first
         if (batchCurrentCount === FIREHOSE_MAX_BATCH_COUNT || batchCurrentBytes + nextRecordSize > FIREHOSE_MAX_BATCH_BYTES || i === records.length - 1) {

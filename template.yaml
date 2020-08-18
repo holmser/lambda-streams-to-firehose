@@ -15,12 +15,16 @@ Resources:
       CodeUri: src/
       Handler: index.handler
       Runtime: nodejs12.x
+      Environment:
+        Variables:
+          DEFAULT_DELIVERY_STREAM: dynamodb-to-s3
       Policies:
         - DynamoDBStreamReadPolicy:
             TableName: DDBSourceTable
             StreamName: !GetAtt DDBSourceTable.StreamArn
-        # - KinesisStreamReadPolicy
-        # - FirehoseWritePolicy
+        - FirehoseWritePolicy:
+            DeliveryStreamName: dynamodb-to-s3
+
   DDBSourceTable:
     Type: AWS::DynamoDB::Table
     Properties:
